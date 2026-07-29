@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#f4a261" />
+  <meta name="description" content="Boş Masa ile yakınındaki süreli restoran ve kafe fırsatlarını keşfet." />
+  <title>Boş Masa | Yakındaki Fırsatlar</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Boş Masa ana sayfa"><span class="logo">BM</span><span>Boş Masa</span></a>
+    <nav>
+      <button class="link-btn" data-view="deals">Fırsatlar</button>
+      <button class="link-btn" data-view="business">İşletmeyim</button>
+      <button id="authOpen" class="primary small">Giriş / Kayıt</button>
+      <button id="logoutBtn" class="ghost small hidden">Çıkış</button>
+    </nav>
+  </header>
+
+  <main>
+    <section id="homeView" class="view active hero">
+      <div class="hero-copy">
+        <span class="eyebrow">Yakınındaki boş masalar fırsata dönüşsün</span>
+        <h1>Şehrindeki anlık fırsatları keşfet.</h1>
+        <p>Restoran, kafe ve barların süreli kampanyalarını üyelik zorunluluğu olmadan incele. Kod almak veya favoriye eklemek istediğinde ücretsiz hesap oluştur.</p>
+        <div class="actions">
+          <button class="primary" data-view="deals">Fırsat Bul</button>
+          <button class="ghost" data-view="business">İşletme Paneli</button>
+        </div>
+      </div>
+      <div class="phone-card" aria-label="Örnek fırsat kartı">
+        <span class="badge">38 dk kaldı</span>
+        <h3>Masa Bistro</h3>
+        <p>İlk ana yemekte %25 indirim</p>
+        <div class="price">Kadıköy · 850 m</div>
+      </div>
+    </section>
+
+    <section id="dealsView" class="view section">
+      <div class="section-head">
+        <div><span class="eyebrow">Misafir erişimi açık</span><h2>Aktif fırsatlar</h2></div>
+        <input id="searchInput" class="search" placeholder="İşletme veya semt ara" />
+      </div>
+      <div id="dealGrid" class="grid"></div>
+    </section>
+
+    <section id="businessView" class="view section">
+      <div class="business-hero">
+        <div>
+          <span class="eyebrow">İşletmeler için ayrı alan</span>
+          <h2>Boş masanı doğru zamanda doldur.</h2>
+          <p>Kampanya oluştur, süre belirle, kod kullanımını izle. İşletme hesabı kullanıcı hesabından ayrı yetkilendirilir.</p>
+          <button id="businessAuthOpen" class="primary">İşletme Girişi / Kaydı</button>
+        </div>
+        <div class="stats-card">
+          <div><strong>12</strong><span>Aktif kampanya</span></div>
+          <div><strong>248</strong><span>Kod görüntüleme</span></div>
+          <div><strong>%31</strong><span>Dönüşüm</span></div>
+        </div>
+      </div>
+      <div id="businessPanel" class="panel hidden">
+        <div class="section-head"><div><span class="eyebrow">İşletme paneli</span><h2>Kampanya yönetimi</h2></div></div>
+        <form id="campaignForm" class="form-grid">
+          <label>Başlık<input id="campaignTitle" required placeholder="Örn. İlk kahvede %20" /></label>
+          <label>Süre (dakika)<input id="campaignMinutes" required min="10" type="number" value="60" /></label>
+          <label class="wide">Açıklama<input id="campaignDesc" required placeholder="Kampanya detayları" /></label>
+          <button class="primary" type="submit">Kampanya Oluştur</button>
+        </form>
+        <div id="campaignList" class="mini-list"></div>
+      </div>
+    </section>
+  </main>
+
+  <div id="authModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="modal-card">
+      <button id="authClose" class="close" aria-label="Kapat">×</button>
+      <span class="eyebrow" id="authRoleLabel">Kullanıcı hesabı</span>
+      <h2 id="authTitle">Giriş yap</h2>
+      <div class="tabs">
+        <button id="loginTab" class="tab active">Giriş</button>
+        <button id="registerTab" class="tab">Kayıt Ol</button>
+      </div>
+      <form id="authForm">
+        <label id="nameWrap" class="hidden">Ad soyad<input id="fullName" autocomplete="name" /></label>
+        <label>E-posta<input id="email" type="email" autocomplete="email" required /></label>
+        <label>Şifre<input id="password" type="password" minlength="6" autocomplete="current-password" required /></label>
+        <button id="authSubmit" class="primary full" type="submit">Giriş Yap</button>
+      </form>
+      <p id="authMessage" class="message" aria-live="polite"></p>
+      <p class="fineprint">Rastgele e-posta ve şifre artık giriş sağlamaz. Hesabın Supabase Auth üzerinde gerçekten bulunması gerekir.</p>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
