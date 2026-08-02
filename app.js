@@ -102,7 +102,7 @@ async function applySession() {
   $('#logoutBtn').classList.toggle('hidden', !user);
 
   const role = user?.user_metadata?.role || 'user';
-
+  console.log("ROLE =", role);
   $('#accountBtn').classList.toggle(
     'hidden',
     !user || role === 'business'
