@@ -95,13 +95,25 @@ function translateError(m=''){
   return m || 'İşlem tamamlanamadı.';
 }
 
-async function applySession(){
-  const user=state.session?.user;
-  $('#authOpen').classList.toggle('hidden',!!user);
-  $('#logoutBtn').classList.toggle('hidden',!user);
-  const role=user?.user_metadata?.role || 'user';
-  $('#businessPanel').classList.toggle('hidden',role!=='business');
+async function applySession() {
+  const user = state.session?.user;
+
+  $('#authOpen').classList.toggle('hidden', !!user);
+  $('#logoutBtn').classList.toggle('hidden', !user);
+
+  const role = user?.user_metadata?.role || 'user';
+
+  $('#accountBtn').classList.toggle(
+    'hidden',
+    !user || role === 'business'
+  );
+
+  $('#businessPanel').classList.toggle(
+    'hidden',
+    role !== 'business'
+  );
 }
+
 $('#logoutBtn').addEventListener('click',async()=>{if(sb)await sb.auth.signOut();state.session=null;await applySession();showView('home')});
 
 $('#campaignForm').addEventListener('submit',e=>{
