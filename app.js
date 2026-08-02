@@ -22,15 +22,109 @@ function showView(name){
 }
 $$('[data-view]').forEach(b=>b.addEventListener('click',()=>showView(b.dataset.view)));
 
-function renderDeals(filter=''){
-  const q=filter.toLocaleLowerCase('tr');
-  const rows=deals.filter(d=>`${d.name} ${d.area} ${d.title}`.toLocaleLowerCase('tr').includes(q));
-  $('#dealGrid').innerHTML=rows.map((d,i)=>`<article class="deal"><span class="badge">${d.minutes} dk kaldı</span><h3>${d.name}</h3><p>${d.title}</p><div class="deal-footer"><span>${d.area}</span><button class="primary small claim" data-id="${i}">Kodu Al</button></div></article>`).join('') || '<p>Aramana uygun fırsat bulunamadı.</p>';
-  $$('.claim').forEach(b=>b.addEventListener('click',()=>requireUser()));
+function renderDeals(filter = '') {
+  const q = filter.toLocaleLowerCase('tr');
+
+  const rows = deals.filter(d =>
+    `${d.name} ${d.area} ${d.title}`
+      .toLocaleLowerCase('tr')
+      .includes(q)
+  );
+
+  $('#dealGrid').innerHTML = rows.map((d, i) => `
+    <article
+      class="deal business-card"
+      data-business-id="${i}"
+      tabindex="0"
+      role="button"
+      aria-label="${d.name} işletme profilini aç"
+    >
+      <span class="badge">${d.minutes} dk kaldı</span>
+      <h3>${d.name}</h3>
+      <p>${d.title}</p>
+
+      <div class="deal-footer">
+        <span>${d.area}</span>
+        <button
+          class="ghost small business-view-btn"
+          data-business-id="${i}"
+          type="button"
+        >
+          İşletmeyi İncele
+        </button>
+      </div>
+    </article>
+  `).join('') || '<p>Aramana uygun fırsat bulunamadı.</p>';
+
+  $$('.business-card').forEach(card => {
+    card.addEventListener('click', () => {
+      openBusinessDetail(Number(card.dataset.businessId));
+    });
+
+    card.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        openBusinessDetail(Number(card.dataset.businessId));
+      }
+    });
+  });
+
+  $$('.business-view-btn').forEach(button => {
+    button.addEventListener('click', event => {
+      event.stopPropagation();
+      openBusinessDetail(Number(button.dataset.businessId));
+    });
+  });
 }
 $('#searchInput').addEventListener('input',e=>renderDeals(e.target.value));
 renderDeals();
+let selectedBusiness = null;
 
+function openBusinessDetail(index) {
+  const business = deals[index];
+  if (!business) return;
+
+  selectedBusiness = business;
+
+  $('#businessDetailCategory').textContent = 'RESTORAN / KAFE';
+  $('#businessDetailTitle').textContent = business.name;
+  $('#businessDetailLocation').textContent = business.area;
+  $('#businessDetailAddress').textContent = `${business.area}, İstanbul`;
+  $('#businessDetailPhone').textContent = 'İşletme tarafından henüz eklenmedi';
+  $('#businessDetailHours').textContent = '09.00 – 23.00';
+  $('#businessDetailRating').textContent = 'Yeni işletme';
+
+  $('#businessDetailDescription').textContent =
+    `${business.name}, ${business.area} bölgesinde hizmet veren bir işletmedir. İşletme detayları yakında güncellenecektir.`;
+
+  $('#businessCampaignTitle').textContent = business.title;
+  $('#businessCampaignDescription').textContent = business.title;
+  $('#businessCampaignTime').textContent = `${business.minutes} dk kaldı`;
+  $('#businessCampaignMessage').textContent = '';
+
+  $('#businessDetailModal').classList.remove('hidden');
+}
+
+$('#businessDetailClose')?.addEventListener('click', () => {
+  $('#businessDetailModal').classList.add('hidden');
+});
+
+$('#businessDetailModal')?.addEventListener('click', event => {
+  if (event.target.id === 'businessDetailModal') {
+    $('#businessDetailModal').classList.add('hidden');
+  }
+});
+
+$('#businessCampaignClaim')?.addEventListener('click', () => {
+  if (!state.session?.user) {
+    $('#businessDetailModal').classList.add('hidden');
+    openAuth('user', 'login');
+    return;
+  }
+
+  $('#businessCampaignMessage').textContent =
+    'Kampanya kodunun hesabınıza kaydedilmesi sonraki aşamada etkinleştirilecek.';
+});
 function openAuth(role='user', mode='login'){
   state.role=role; state.mode=mode;
   $('#authRoleLabel').textContent=role==='business'?'İşletme hesabı':'Kullanıcı hesabı';
