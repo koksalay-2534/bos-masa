@@ -151,6 +151,102 @@
     </section>
   </div>
 </div>
+  <div id="businessDetailModal"
+     class="modal hidden"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="businessDetailTitle">
+
+  <div class="modal-card business-detail-card">
+
+    <button id="businessDetailClose"
+            class="close"
+            aria-label="Kapat">×</button>
+
+    <div class="business-cover">
+      <div class="business-cover-placeholder">BM</div>
+    </div>
+
+    <div class="business-detail-heading">
+      <div>
+        <span id="businessDetailCategory"
+              class="eyebrow">RESTORAN</span>
+
+        <h2 id="businessDetailTitle">İşletme adı</h2>
+
+        <p id="businessDetailLocation"
+           class="business-location">Konum</p>
+      </div>
+
+      <button id="businessFavoriteBtn"
+              class="ghost favorite-business-btn"
+              type="button">
+        ♡ Favoriye Ekle
+      </button>
+    </div>
+
+    <div class="business-information-grid">
+
+      <div>
+        <span>Adres</span>
+        <strong id="businessDetailAddress">-</strong>
+      </div>
+
+      <div>
+        <span>Telefon</span>
+        <strong id="businessDetailPhone">-</strong>
+      </div>
+
+      <div>
+        <span>Çalışma saatleri</span>
+        <strong id="businessDetailHours">-</strong>
+      </div>
+
+      <div>
+        <span>Puan</span>
+        <strong id="businessDetailRating">Yeni işletme</strong>
+      </div>
+
+    </div>
+
+    <section class="business-about-section">
+      <h3>İşletme hakkında</h3>
+
+      <p id="businessDetailDescription">
+        İşletme açıklaması henüz eklenmemiş.
+      </p>
+    </section>
+
+    <section class="business-campaign-section">
+
+      <div class="business-campaign-heading">
+        <div>
+          <span class="eyebrow">AKTİF FIRSAT</span>
+          <h3 id="businessCampaignTitle">Kampanya</h3>
+        </div>
+
+        <span id="businessCampaignTime"
+              class="badge">-</span>
+      </div>
+
+      <p id="businessCampaignDescription">
+        Kampanya açıklaması
+      </p>
+
+      <button id="businessCampaignClaim"
+              class="primary full"
+              type="button">
+        Kampanya Kodunu Al
+      </button>
+
+      <p id="businessCampaignMessage"
+         class="message"
+         aria-live="polite"></p>
+
+    </section>
+
+  </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>
