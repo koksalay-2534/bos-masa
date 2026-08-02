@@ -16,6 +16,7 @@
       <button class="link-btn" data-view="deals">Fırsatlar</button>
       <button class="link-btn" data-view="business">İşletmeyim</button>
       <button id="authOpen" class="primary small">Giriş / Kayıt</button>
+      <button id="accountBtn" class="ghost small hidden">Hesabım</button>
       <button id="logoutBtn" class="ghost small hidden">Çıkış</button>
     </nav>
   </header>
@@ -93,6 +94,63 @@
       <p class="fineprint">Rastgele e-posta ve şifre artık giriş sağlamaz. Hesabın Supabase Auth üzerinde gerçekten bulunması gerekir.</p>
     </div>
   </div>
+  <div id="accountModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
+  <div class="modal-card account-card">
+    <button id="accountClose" class="close" aria-label="Kapat">×</button>
+
+    <span class="eyebrow">KULLANICI HESABI</span>
+    <h2 id="accountTitle">Hesabım</h2>
+
+    <div class="account-tabs">
+      <button class="account-tab active" data-account-tab="profile">Profilim</button>
+      <button class="account-tab" data-account-tab="codes">Aldığım Kodlar</button>
+      <button class="account-tab" data-account-tab="favorites">Favorilerim</button>
+      <button class="account-tab" data-account-tab="history">Kullanım Geçmişim</button>
+    </div>
+
+    <section id="profilePanel" class="account-panel active">
+      <h3>Profil bilgilerim</h3>
+
+      <div class="account-info">
+        <div>
+          <span>Ad soyad</span>
+          <strong id="accountFullName">-</strong>
+        </div>
+
+        <div>
+          <span>E-posta</span>
+          <strong id="accountEmail">-</strong>
+        </div>
+
+        <div>
+          <span>Hesap türü</span>
+          <strong id="accountRole">Kullanıcı</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="codesPanel" class="account-panel">
+      <h3>Aldığım kodlar</h3>
+      <div id="accountCodes" class="account-list">
+        <p class="empty-state">Henüz aldığınız bir fırsat kodu bulunmuyor.</p>
+      </div>
+    </section>
+
+    <section id="favoritesPanel" class="account-panel">
+      <h3>Favori mekânlarım</h3>
+      <div id="accountFavorites" class="account-list">
+        <p class="empty-state">Henüz favori mekânınız bulunmuyor.</p>
+      </div>
+    </section>
+
+    <section id="historyPanel" class="account-panel">
+      <h3>Kullanım geçmişim</h3>
+      <div id="accountHistory" class="account-list">
+        <p class="empty-state">Henüz kullanılmış fırsatınız bulunmuyor.</p>
+      </div>
+    </section>
+  </div>
+</div>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="config.js"></script>
   <script src="app.js"></script>
