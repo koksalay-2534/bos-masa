@@ -118,4 +118,47 @@ $('#campaignForm').addEventListener('submit',e=>{
   } else {
     console.warn('Supabase yapılandırılmadı. config.js dosyasını doldurun.');
   }
+  const accountBtn = document.querySelector('#accountBtn');
+const accountModal = document.querySelector('#accountModal');
+const accountClose = document.querySelector('#accountClose');
+
+accountBtn?.addEventListener('click', async () => {
+  const user = state.session?.user;
+  if (!user) return;
+
+  document.querySelector('#accountFullName').textContent =
+    user.user_metadata?.full_name || '-';
+
+  document.querySelector('#accountEmail').textContent =
+    user.email || '-';
+
+  document.querySelector('#accountRole').textContent =
+    user.user_metadata?.role === 'business'
+      ? 'İşletme'
+      : 'Kullanıcı';
+
+  accountModal.classList.remove('hidden');
+});
+
+accountClose?.addEventListener('click', () => {
+  accountModal.classList.add('hidden');
+});
+
+document.querySelectorAll('.account-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+
+    document.querySelectorAll('.account-tab')
+      .forEach(t => t.classList.remove('active'));
+
+    tab.classList.add('active');
+
+    document.querySelectorAll('.account-panel')
+      .forEach(p => p.classList.remove('active'));
+
+    const panel =
+      document.querySelector('#' + tab.dataset.accountTab + 'Panel');
+
+    panel?.classList.add('active');
+  });
+});
 })();
